@@ -1,1 +1,2 @@
-new file
+def new_function():
+    print("s")
