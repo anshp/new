@@ -1,3 +1,3 @@
 def new_function():
     print("s")
-    branch test2
+    branch test3
