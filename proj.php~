@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>
+			Hello
+		</title>
+	</head>
+	
+	<body>
+		<?php
+			
+$previous_name = session_name("WebsiteID");
+
+echo "The previous session name was $previous_name<br />";
+		?>
+	</body>
+</html>
