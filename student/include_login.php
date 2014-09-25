@@ -1,5 +1,4 @@
 <?php
-
 //Checking for login
 if ($_COOKIE['PHPSESSID']){
 	session_start();
