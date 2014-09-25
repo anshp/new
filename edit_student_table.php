@@ -60,7 +60,7 @@
 				Id:
 			</label>
 			<div class="col-sm-10">
-				<input class = "form-control" type = "text" name = "id" value = "<?php echo $student['id'] ?>" readonly><br>
+				<input class = "form-control" type = "text" name = "id" value = "<?php echo $student['id'] ?>" readonly>
 			</div>
 		</div>
 		<div class="form-group">
@@ -68,7 +68,7 @@
 				Name:
 			</label>
 			<div class="col-sm-10">
-				<input class = "form-control" type = "text" name = "name" value = "<?php echo $student['name'] ?>"><br>
+				<input class = "form-control" type = "text" name = "name" value = "<?php echo $student['name'] ?>">
 			</div>
 		</div>
 		<div class="form-group">
@@ -76,7 +76,7 @@
 				Class:
 			</label>
 			<div class="col-sm-10">
-				<input class = "form-control" type = "text" name = "class" value = "<?php echo $student['class'] ?>"><br>
+				<input class = "form-control" type = "text" name = "class" value = "<?php echo $student['class'] ?>">
 			</div>
 		</div>
 		<div class="form-group">
@@ -84,7 +84,7 @@
 				Date Of Birth:
 			</label>
 			<div class="col-sm-10">
-				<input class = "form-control" type = "date" name = "dob" value = "<?php echo $student['dob'] ?>"><br>
+				<input class = "form-control" type = "date" name = "dob" value = "<?php echo $student['dob'] ?>">
 			</div>
 		</div>
 		<div class="col-sm-offset-2 col-sm-10">

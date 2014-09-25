@@ -47,38 +47,45 @@
 		$q->bindParam(2, $_POST['class']);
 		$q->bindParam(3, $_POST['dob']);
 		$q->execute();
-		echo 'Created';
+		$msg = 'New student <b>'.$_POST['name'].'</b> created';
 	}
 	?>
 </head>
 <body>
 	<div id = "creatediv">
 		<form method="post" action="create_student.php" class="form-horizontal">
+
+		<?php
+		if ($msg)
+			echo "<div class = 'col-sm-offset-1 alert alert-success'>".$msg."</div>";
+		?>
 			<h2>
 				Enter Student Data:
 			</h2>
+			
 			<div class="form-group">
 				<label class="col-sm-3 control-label">Name:</label>
 				<div class="col-sm-9">
-					<input class="form-control" type = "text" name = "name" placeholder = "Name"><br>
+					<input class="form-control" type = "text" name = "name" placeholder = "Name">
 				</div>
 			</div>
 			<div class="form-group">
 				<label class="col-sm-3 control-label">Class:</label>
 				<div class="col-sm-9">
-					<input class="form-control" type = "text" name = "class" placeholder = "Class"><br>
+					<input class="form-control" type = "text" name = "class" placeholder = "Class">
 				</div>
 			</div>
 			<div class="form-group">
 				<label class="col-sm-3 control-label">Date of Birth:</label>
 				<div class="col-sm-9">
-					<input class="form-control" type = "date" name = "dob" placeholder = "Date of Birth"><br>
+					<input class="form-control" type = "date" name = "dob" placeholder = "Date of Birth">
 				</div>
 			</div>
 		 <div class="col-sm-offset-3">
 		 	<input class='btn btn-primary' type="submit" name="createbutton"  value="Create">
-		 	<a class='btn btn-success' href = "student.php">Back to view</a>
+		 	<a class='btn btn-success col-sm-offset-1' href = "student.php">Back to view</a>
 		 </div>
+
 		</form>
 	</div>
 	

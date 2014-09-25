@@ -3,6 +3,12 @@
 <head>
 	<title>Login / Signup
 	</title>
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 
 	<?php
 
@@ -27,7 +33,7 @@
 	if($_POST['signup']){				
 		if ($_POST['name'] and $_POST['pass']){
 			if (array_search($_POST['name']."\n",$user)){
-				echo "Username already exists";	
+				$msg = "Username already exists";	
 			}
 			else{
 				$pa = fopen("pass.txt","a");
@@ -44,33 +50,57 @@
 			//username and password correct
 			session_start();
 			$_SESSION['username'] = $_POST['name'];
-			header("Location: page.php");
+			header("Location: student.php");
 		}
 		else{
-			echo "wrong username or password";
+			$msg = "wrong username or password";
 		}
 	}	
 	?>
 
 	<style>
+	form{
+		//border: 1px solid red;
+	}
+
 	h1{
-		text-align: center;
+		text-align:center;
+		margin-left: 10px;
+		font-size: 18px;
 	}
 	#left{text-align: left;}
 	#d{
-		width: 300px;
-		margin-left: 300px;
+		width: 400px;
+		margin-left: 200px;
 	}
 </style>
 </head>
 
 <body>
 	<div id = "d">
-		<form method="post" action="login.php">
-			<p><input type = "text" name = "name" placeholder = "Username"></p>
-			<p><input type = "password" name = "pass" placeholder = "Password"></p>
-			<input type="submit" name="signin"  value="Sign in">
-			<input type="submit" name="signup"  value="Sign up">
+		<form class = 'form-horizontal' method="post" action="login.php">
+			<h1 >Login</h1><br>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">
+					Username:
+				</label>
+				<div class="col-sm-9">
+					<input class = "form-control" type = "text" name = "name" placeholder = "Username" value ='abcd'>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">
+					Password:
+				</label>
+				<div class="col-sm-9">
+					<input class = "form-control" type = "password" name = "pass" placeholder = "Password" value ='pqrs'>
+				</div>
+			</div>
+			<?php
+			echo "<div class = 'col-sm-offset-3'>".$msg."</div>";
+			?>
+			<input class = "col-sm-offset-3 col-sm-4 btn btn-primary" type="submit" name="signin"  value="Sign in">
+			<input class = "col-sm-offset-1 col-sm-4 btn btn-success" type="submit" name="signup"  value="Sign up">
 		</form>
 	</div>
 	
