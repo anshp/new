@@ -1,28 +1,27 @@
 <?php
-class BaseClass {
-	function __construct() {
-		 print "In BaseClass constructor<br>";
-	}
+class MyClass {
+    const CONST_VALUE = 'A constant value<br>';
 }
 
-class SubClass extends BaseClass {
-	function __construct() {
-		parent::__construct();
-		print "In SubClass constructor<br>";
-	}
+$classname = 'MyClass';
+echo $classname::CONST_VALUE; // As of PHP 5.3.0
+
+echo MyClass::CONST_VALUE;
+
+
+
+class OtherClass extends MyClass
+{
+    public static $my_static = 'static var<br>';
+
+    public static function doubleColon() {
+        echo parent::CONST_VALUE;
+        echo self::$my_static;
+    }
 }
 
-class OtherSubClass extends BaseClass {
-	 // inherits BaseClass's constructor
-}
+$classname = 'OtherClass';
+echo $classname::doubleColon(); // As of PHP 5.3.0
 
-// In BaseClass constructor
-$obj = new BaseClass();
-
-// In BaseClass constructor
-// In SubClass constructor
-$obj = new SubClass();
-
-// In BaseClass constructor
-$obj = new OtherSubClass();
+OtherClass::doubleColon();
 ?>
