@@ -1,27 +1,10 @@
 <?php
-class MyClass {
-    const CONST_VALUE = 'A constant value<br>';
-}
 
-$classname = 'MyClass';
-echo $classname::CONST_VALUE; // As of PHP 5.3.0
+// Show all information, defaults to INFO_ALL
+phpinfo();
 
-echo MyClass::CONST_VALUE;
+// Show just the module information.
+// phpinfo(8) yields identical results.
+//phpinfo(INFO_MODULES);
 
-
-
-class OtherClass extends MyClass
-{
-    public static $my_static = 'static var<br>';
-
-    public static function doubleColon() {
-        echo parent::CONST_VALUE;
-        echo self::$my_static;
-    }
-}
-
-$classname = 'OtherClass';
-echo $classname::doubleColon(); // As of PHP 5.3.0
-
-OtherClass::doubleColon();
 ?>
