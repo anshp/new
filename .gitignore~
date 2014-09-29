@@ -3,3 +3,4 @@ test.php
 .*~
 *.*~
 .gitignore~
+/quickstart/nbproject/private/
