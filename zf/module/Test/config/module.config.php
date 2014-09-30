@@ -2,7 +2,7 @@
 return array(
     'view_manager' => array(
         'template_path_stack' => array(
-            '<module-name>' => __DIR__ . '/../view'
+            'Test' => __DIR__ . '/../view'
         ),
     ),
     'router' => array(
@@ -27,12 +27,54 @@ return array(
                     ),
                 ),
             ),
+            'Test-bye-world' => array(
+                'type'    => 'Literal',
+                    'options' => array(
+                    'route' => '/bye/world',
+                    'defaults' => array(
+                        'controller' => 'Test\Controller\Bye',
+                        'action'     => 'world',
+                    ),
+                ),
+            ),
+            'Test-message-hello' => array(
+                'type'    => 'Literal',
+                    'options' => array(
+                    'route' => '/message/hello',
+                    'defaults' => array(
+                        'controller' => 'Test\Controller\Message',
+                        'action'     => 'hello',
+                    ),
+                ),
+            ),
+            'Test-message-bye' => array(
+                'type'    => 'Literal',
+                    'options' => array(
+                    'route' => '/message/bye',
+                    'defaults' => array(
+                        'controller' => 'Test\Controller\Message',
+                        'action'     => 'bye',
+                    ),
+                ),
+            ),
+            'Test-message-other' => array(
+                'type'    => 'Literal',
+                    'options' => array(
+                    'route' => '/',
+                    'defaults' => array(
+                        'controller' => 'Test\Controller\Message',
+                        'action'     => 'hello',
+                    ),
+                ),
+            ),
         ),
     ),
     'controllers' => array(
         'invokables' => array(
             'Test\Controller\Hello' => 'Test\Controller\HelloController',
             'Test\Controller\Other' => 'Test\Controller\OtherController',
+            'Test\Controller\Bye' => 'Test\Controller\ByeController',
+            'Test\Controller\Message' => 'Test\Controller\MessageController',
         ),
     ),
 );
