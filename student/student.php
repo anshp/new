@@ -3,10 +3,7 @@
 <head>
     <title>Student Database 1
     </title>
-
-    <!-- Latest compiled and minified CSS -->
     <link rel = "stylesheet" href = "bootstrap.min.css">
-    <!-- Optional theme -->
     <link rel = "stylesheet" href = "bootstrap-theme.min.css">
 
     <style>
@@ -182,10 +179,12 @@
         $p = ceil($count/$limit);
         echo "<ul class = 'pagination'>";
         for ($i = 0; $i < $p; $i++){
-            if (($i+1) == $page)
+            if (($i+1) == $page){
                 echo "<li><a href = student.php?page=".($i+1)."&sort=".$sort."&ord=".($ord[$sort])."&search=".$a."><div class='page'>".($i+1)."</div></a></li>";
-            else
+            }
+            else {
                 echo "<li><a href = student.php?page=".($i+1)."&sort=".$sort."&ord=".($ord[$sort])."&search=".$a.">".($i+1)."</a></li>";
+            }
         }
         echo "</ul>";
         ?>

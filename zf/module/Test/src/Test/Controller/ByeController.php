@@ -9,6 +9,7 @@ class ByeController extends AbstractActionController
     public function worldAction()
     {
         $message = $this->params()->fromQuery('message', 'Bye');
+        $this -> setVariable('ll','pp');
         return new ViewModel(array('message' => $message));
     }
 }

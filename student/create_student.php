@@ -3,9 +3,7 @@
 <head>
     <title>Create New Student
     </title>
-    <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="bootstrap.min.css">
-    <!-- Optional theme -->
     <link rel="stylesheet" href="bootstrap-theme.min.css">
     
     <style>
