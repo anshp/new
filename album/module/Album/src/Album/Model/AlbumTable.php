@@ -4,6 +4,7 @@ namespace Album\Model;
 use Zend\Db\ResultSet\ResultSet;
  use Zend\Db\TableGateway\TableGateway;
  use Zend\Db\Sql\Select;
+ use Zend\Db\Sql\Where;
  use Zend\Paginator\Adapter\DbSelect;
  use Zend\Paginator\Paginator;
  class AlbumTable
@@ -15,11 +16,18 @@ use Zend\Db\ResultSet\ResultSet;
          $this->tableGateway = $tableGateway;
      }
 
-     public function fetchAll($paginated=false)
+     public function fetchAll($request, $paginated=false)
      {
          if ($paginated) {
              // create a new Select object for the table album
              $select = new Select('album');
+             $select->order($request['sort']." ".$request['order']);
+             if ($request['search']){
+                 $spec = function (Where $where) {
+                     $where->like('title', $request['search']);
+                 };
+                 $select->where($spec);
+             }
              // create a new result set based on the Album entity
              $resultSetPrototype = new ResultSet();
              $resultSetPrototype->setArrayObjectPrototype(new Album());

@@ -1,11 +1,12 @@
 <?php 
+
 if ($this->pageCount): ?>
      <div>
          <ul class="pagination">
              <!-- Previous page link -->
              <?php if (isset($this->previous)): ?>
                  <li>
-                     <a href="<?php echo $this->url($this->route); ?>?page=<?php echo $this->previous; ?>">
+                     <a href="<?php echo $this->url($this->route); ?>?page=<?php echo ($this->previous)."&sort=".$this->sort."&order=".$this->order; ?>">
                          <<
                      </a>
                  </li>
@@ -21,7 +22,7 @@ if ($this->pageCount): ?>
              <?php foreach ($this->pagesInRange as $page): ?>
                  <?php if ($page != $this->current): ?>
                      <li>
-                         <a href="<?php echo $this->url($this->route);?>?page=<?php echo $page; ?>">
+                         <a href="<?php echo $this->url($this->route);?>?page=<?php echo $page."&sort=".$this->sort."&order=".$this->order; ?>">
                              <?php echo $page; ?>
                          </a>
                      </li>
@@ -35,7 +36,7 @@ if ($this->pageCount): ?>
              <!-- Next page link -->
              <?php if (isset($this->next)): ?>
                  <li>
-                     <a href="<?php echo $this->url($this->route); ?>?page=<?php echo $this->next; ?>">
+                     <a href="<?php echo $this->url($this->route); ?>?page=<?php echo $this->next."&sort=".$this->sort."&order=".$this->order; ?>">
                          >>
                      </a>
                  </li>

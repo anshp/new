@@ -19,23 +19,39 @@ use Album\Form\AlbumForm;
          return $this->albumTable;
      }
      public function indexAction()
- {
-         $request = $this->getRequest();
-         if (!$request){
-             $request = 'id';
+     {
+         $form = new AlbumForm();
+         $form->get('submit')->setValue('Search');
+         
+         $request = $this->params()->fromQuery();
+         
+         $srequest = $this->getRequest();
+         if ($srequest->isPost()) {
+             $request['search'] = $srequest->getPost('search').'%';
+         }         
+         if (!$request['sort']){
+             $request['sort'] = 'id';
+             $request['ord'] = array($request['sort'] => 1);
+         } else{
+             $request['ord'][$request['sort']] = $request['order']%2;
          }
          
-     // grab the paginator from the AlbumTable
-     $paginator = $this->getAlbumTable()->fetchAll(true, $request);
-     // set the current page to what has been passed in query string, or to 1 if none set
-     $paginator->setCurrentPageNumber((int) $this->params()->fromQuery('page', 1));
-     // set the number of items per page to 10
-     $paginator->setItemCountPerPage(10);
-
-     return new ViewModel(array(
-         'paginator' => $paginator
-     ));
- }
+         
+         
+         if ($request['ord'][$request['sort']] == 1 or $request['order'] == 'ASC'){
+             $request['order'] = 'ASC';
+         }
+         else{
+             $request['order'] = 'DESC';
+         }
+         
+        $paginator = $this->getAlbumTable()->fetchAll($request, true);
+        $paginator->setCurrentPageNumber((int) $this->params()->fromQuery('page', 1));
+        $paginator->setItemCountPerPage(10);
+        return new ViewModel(array('paginator' => $paginator,
+            'request' => $request,
+            'form' => $form));
+     }
 
      public function addAction()
      {

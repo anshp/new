@@ -12,7 +12,7 @@ namespace Album\Form;
 
          $this->add(array(
              'name' => 'id',
-             'type' => 'Hidden',
+             'type' => 'text',
          ));
          $this->add(array(
              'name' => 'title',
@@ -34,6 +34,14 @@ namespace Album\Form;
              'attributes' => array(
                  'value' => 'Go',
                  'id' => 'submitbutton',
+             ),
+         ));
+         $this->add(array(
+             'name' => 'search',
+             'type' => 'Text',
+             'attributes' => array(
+                 'label' => 'Search',
+                 
              ),
          ));
      }

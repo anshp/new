@@ -38,7 +38,7 @@
     
     //Determine sorting and order
     if ($_GET['sort']) {
-        $sort=$_GET['sort'];
+        $sort = $_GET['sort'];
         $ord[$sort] = $_GET['ord'] % 2;
     } else {
         $sort=1;
