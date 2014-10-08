@@ -44,7 +44,6 @@ use Album\Form\AlbumForm;
          else{
              $request['order'] = 'DESC';
          }
-         
         $paginator = $this->getAlbumTable()->fetchAll($request, true);
         $paginator->setCurrentPageNumber((int) $this->params()->fromQuery('page', 1));
         $paginator->setItemCountPerPage(10);

@@ -22,11 +22,14 @@ use Zend\Db\ResultSet\ResultSet;
              // create a new Select object for the table album
              $select = new Select('album');
              $select->order($request['sort']." ".$request['order']);
+
              if ($request['search']){
-                 $spec = function (Where $where) {
-                     $where->like('title', $request['search']);
+                 print_r($request);
+                 $spec = function (Where $where, $search) {
+                     
+                     $where->like('title', $search);
                  };
-                 $select->where($spec);
+                 $select->where($spec, $request['search']);
              }
              // create a new result set based on the Album entity
              $resultSetPrototype = new ResultSet();
