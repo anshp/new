@@ -12,7 +12,6 @@
     }
     .page{
         font-size: 20px;
-        font-weight: bold;
     }
     form {
         width: 600px;

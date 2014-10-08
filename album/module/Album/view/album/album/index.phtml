@@ -18,6 +18,9 @@
 </style>
  <h1><?php echo $this->escapeHtml($title); ?></h1>
  <?php
+ if (!$request['page']){
+     $request['page']=1;
+ }
  if ($request['del']){
      echo "<div class = 'alert alert-danger'>Album ".$request['del']." deleted</div>";        
  }
@@ -32,11 +35,15 @@ echo $this->formInput($form->get('search'))." ";
 
 $form->get('submit')->setAttribute('class','btn btn-success');
 
-echo " ".$this->formSubmit($form->get('submit'));
+echo " ".$this->formSubmit($form->get('submit'))." ";
+if($request['search']){
+    echo "<a class = 'btn btn-danger' href = '".$this->url('album', array('action' => 'index'))."'>Cancel</a>";
+}
 echo $this->form()->closeTag();
+
 ?>
  <br>
-<table class="table">
+<table class="table table-striped">
      <tr>
          <th><a href="<?php
          echo $this->url('album', array('action' => 'index'))."?page=".$request['page']."&sort=id&order=".($request['ord']['id']+1);
@@ -66,11 +73,13 @@ echo $this->form()->closeTag();
              <td><?php echo $this->escapeHtml($album->artist);?></td>
              <td>
                  <a href="<?php echo $this->url('album',
-                     array('action' => 'edit', 'id' => $album->id));?>">Edit</a>
+                     array('action' => 'edit', 'id' => $album->id));
+                 ?>">Edit</a>
              </td>
              <td>
                  <a href="<?php echo $this->url('album',
-                     array('action' => 'delete', 'id' => $album->id));?>">Delete</a>
+                     array('action' => 'delete', 'id' => $album->id));
+                 ?>">Delete</a>
              </td>
          </tr>
      <?php endforeach; 
