@@ -23,14 +23,14 @@ use Zend\Db\ResultSet\ResultSet;
              $select = new Select('album');
              $select->order($request['sort']." ".$request['order']);
 
-             if ($request['search']){
+             /*if ($request['search']){
                  print_r($request);
                  $spec = function (Where $where, $search) {
                      
                      $where->like('title', $search);
                  };
                  $select->where($spec, $request['search']);
-             }
+             }*/
              // create a new result set based on the Album entity
              $resultSetPrototype = new ResultSet();
              $resultSetPrototype->setArrayObjectPrototype(new Album());

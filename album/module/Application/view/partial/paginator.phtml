@@ -6,7 +6,11 @@ if ($this->pageCount): ?>
              <!-- Previous page link -->
              <?php if (isset($this->previous)): ?>
                  <li>
-                     <a href="<?php echo $this->url($this->route); ?>?page=<?php echo ($this->previous)."&sort=".$this->sort."&order=".$this->order; ?>">
+                     <a href="<?php echo $this->url($this->route); ?>?page=<?php echo ($this->previous)."&sort=".$this->sort."&order=".$this->order;
+                     if ($this->search){
+                             echo "&search=".$this->search;
+                         }
+                     ?>">
                          <<
                      </a>
                  </li>
@@ -22,7 +26,11 @@ if ($this->pageCount): ?>
              <?php foreach ($this->pagesInRange as $page): ?>
                  <?php if ($page != $this->current): ?>
                      <li>
-                         <a href="<?php echo $this->url($this->route);?>?page=<?php echo $page."&sort=".$this->sort."&order=".$this->order; ?>">
+                         <a href="<?php echo $this->url($this->route);?>?page=<?php echo $page."&sort=".$this->sort."&order=".$this->order;
+                         if ($this->search){
+                             echo "&search=".$this->search;
+                         }
+                         ?>">
                              <?php echo $page; ?>
                          </a>
                      </li>
@@ -36,7 +44,11 @@ if ($this->pageCount): ?>
              <!-- Next page link -->
              <?php if (isset($this->next)): ?>
                  <li>
-                     <a href="<?php echo $this->url($this->route); ?>?page=<?php echo $this->next."&sort=".$this->sort."&order=".$this->order; ?>">
+                     <a href="<?php echo $this->url($this->route); ?>?page=<?php echo $this->next."&sort=".$this->sort."&order=".$this->order;
+                     if ($this->search){
+                             echo "&search=".$this->search;
+                         }
+                     ?>">
                          >>
                      </a>
                  </li>

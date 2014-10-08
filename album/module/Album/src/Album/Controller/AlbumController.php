@@ -27,7 +27,7 @@ use Album\Form\AlbumForm;
          
          $srequest = $this->getRequest();
          if ($srequest->isPost()) {
-             $request['search'] = $srequest->getPost('search').'%';
+             $request['search'] = $srequest->getPost('search');
          }         
          if (!$request['sort']){
              $request['sort'] = 'id';

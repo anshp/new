@@ -20,13 +20,25 @@ echo $this->form()->closeTag();
 <table class="table">
      <tr>
          <th><a href="<?php
-         echo $this->url('album', array('action' => 'index'))."?page=".$request['page']."&sort=id&order=".($request['ord']['id']+1);
+         if ($request[search]){
+             echo $this->url('album', array('action' => 'index'))."?page=".$request['page']."&sort=id&order=".($request['ord']['id']+1)."&search=".$request[search];
+         } else {
+             echo $this->url('album', array('action' => 'index'))."?page=".$request['page']."&sort=id&order=".($request['ord']['id']+1);
+         }
          ?>">Id</a></th>
          <th><a href="<?php
-         echo $this->url('album', array('action' => 'index'))."?page=".$request['page']."&sort=title&order=".($request['ord']['title']+1);
+         if ($request[search]){
+             echo $this->url('album', array('action' => 'index'))."?page=".$request['page']."&sort=title&order=".($request['ord']['title']+1)."&search=".$request[search];
+         } else {
+             echo $this->url('album', array('action' => 'index'))."?page=".$request['page']."&sort=title&order=".($request['ord']['title']+1);
+         }
          ?>">Title</a></th>
          <th><a href="<?php
-         echo $this->url('album', array('action' => 'index'))."?page=".$request['page']."&sort=artist&order=".($request['ord']['artist']+1);
+         if ($request[search]){
+             echo $this->url('album', array('action' => 'index'))."?page=".$request['page']."&sort=artist&order=".($request['ord']['artist']+1)."&search=".$request[search];
+         } else {
+             echo $this->url('album', array('action' => 'index'))."?page=".$request['page']."&sort=artist&order=".($request['ord']['artist']+1);
+         }
          ?>">Artist</a></th>
          <th></th>
          <th></th>
@@ -57,7 +69,8 @@ echo $this->form()->closeTag();
           array(
               'route' => 'album',
               'sort' => $request['sort'],
-              'order' => $request['order']
+              'order' => $request['order'],
+              'search' =>$request['search']
               
           )
           );
