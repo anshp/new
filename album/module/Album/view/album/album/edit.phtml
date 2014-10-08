@@ -19,7 +19,8 @@
 
  echo $this->form()->openTag($form);
  echo $this->formHidden($form->get('id'));
- echo $this->formRow($form->get('title'));
- echo $this->formRow($form->get('artist'));
- echo $this->formSubmit($form->get('submit'));
+ echo $this->formRow($form->get('title'))." ";
+ echo $this->formRow($form->get('artist'))." ";
+ echo $this->formSubmit($form->get('submit'))." ";
+ echo $this->formSubmit($form->get('submit2'));
  echo $this->form()->closeTag();

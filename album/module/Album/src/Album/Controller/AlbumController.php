@@ -21,27 +21,23 @@ use Album\Form\AlbumForm;
      public function indexAction()
      {
          $form = new AlbumForm();
-         $form->get('submit')->setValue('Search');
-         
+         $form->get('submit')->setValue('Search Title');
          $request = $this->params()->fromQuery();
-         
          $srequest = $this->getRequest();
          if ($srequest->isPost()) {
              $request['search'] = $srequest->getPost('search');
-         }         
+         }
          if (!$request['sort']){
              $request['sort'] = 'id';
              $request['ord'] = array($request['sort'] => 1);
-         } else{
+         } else {
              $request['ord'][$request['sort']] = $request['order']%2;
          }
-         
-         
+         $form->get('search')->setValue($request['search']);
          
          if ($request['ord'][$request['sort']] == 1 or $request['order'] == 'ASC'){
              $request['order'] = 'ASC';
-         }
-         else{
+         } else {
              $request['order'] = 'DESC';
          }
         $paginator = $this->getAlbumTable()->fetchAll($request, true);
@@ -56,9 +52,12 @@ use Album\Form\AlbumForm;
      {
          $form = new AlbumForm();
          $form->get('submit')->setValue('Add');
-
+         $notification = "";
          $request = $this->getRequest();
          if ($request->isPost()) {
+             if ($request->getPost('submit2')){
+                return $this->redirect()->toRoute('album');
+             }
              $album = new Album();
              $form->setInputFilter($album->getInputFilter());
              $form->setData($request->getPost());
@@ -66,12 +65,14 @@ use Album\Form\AlbumForm;
              if ($form->isValid()) {
                  $album->exchangeArray($form->getData());
                  $this->getAlbumTable()->saveAlbum($album);
-
-                 // Redirect to list of albums
-                 //return $this->redirect()->toRoute('album');
+                 $notification = $form->getData();
+                 $form->get('title')->setValue('');
+                 $form->get('artist')->setValue('');
              }
          }
-         return array('form' => $form);
+         return array('form' => $form,
+             'notification' => $notification
+                 );
      }
 
      public function editAction()
@@ -100,6 +101,9 @@ use Album\Form\AlbumForm;
 
          $request = $this->getRequest();
          if ($request->isPost()) {
+             if ($request->getPost('submit2')){
+                return $this->redirect()->toRoute('album');
+             }
              $form->setInputFilter($album->getInputFilter());
              $form->setData($request->getPost());
 

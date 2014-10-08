@@ -28,6 +28,15 @@ namespace Album\Form;
                  'label' => 'Artist: ',
              ),
          ));
+         
+         $this->add(array(
+             'name' => 'search',
+             'type' => 'Text',
+             'attributes' => array(
+                 'label' => 'Search',
+                 
+             ),
+         ));
          $this->add(array(
              'name' => 'submit',
              'type' => 'Submit',
@@ -37,11 +46,11 @@ namespace Album\Form;
              ),
          ));
          $this->add(array(
-             'name' => 'search',
-             'type' => 'Text',
+             'name' => 'submit2',
+             'type' => 'Submit',
              'attributes' => array(
-                 'label' => 'Search',
-                 
+                 'value' => 'Cancel',
+                 'id' => 'submit2',
              ),
          ));
      }

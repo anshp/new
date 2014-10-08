@@ -13,31 +13,29 @@ $form = $this->form;
 $form->setAttribute('action', $this->url('album', array('action' => 'index')));
 $form->prepare();
 echo $this->form()->openTag($form);
-echo $this->formInput($form->get('search'));
-echo $this->formSubmit($form->get('submit'));
+echo $this->formInput($form->get('search'))." ";
+echo $this->formSubmit($form->get('submit'))." ";
 echo $this->form()->closeTag();
 ?>
+ <br>
 <table class="table">
      <tr>
          <th><a href="<?php
+         echo $this->url('album', array('action' => 'index'))."?page=".$request['page']."&sort=id&order=".($request['ord']['id']+1);
          if ($request[search]){
-             echo $this->url('album', array('action' => 'index'))."?page=".$request['page']."&sort=id&order=".($request['ord']['id']+1)."&search=".$request[search];
-         } else {
-             echo $this->url('album', array('action' => 'index'))."?page=".$request['page']."&sort=id&order=".($request['ord']['id']+1);
+             echo "&search=".$request[search];
          }
          ?>">Id</a></th>
          <th><a href="<?php
+         echo $this->url('album', array('action' => 'index'))."?page=".$request['page']."&sort=title&order=".($request['ord']['title']+1);
          if ($request[search]){
-             echo $this->url('album', array('action' => 'index'))."?page=".$request['page']."&sort=title&order=".($request['ord']['title']+1)."&search=".$request[search];
-         } else {
-             echo $this->url('album', array('action' => 'index'))."?page=".$request['page']."&sort=title&order=".($request['ord']['title']+1);
+             echo "&search=".$request[search];
          }
          ?>">Title</a></th>
          <th><a href="<?php
+         echo $this->url('album', array('action' => 'index'))."?page=".$request['page']."&sort=artist&order=".($request['ord']['artist']+1);
          if ($request[search]){
-             echo $this->url('album', array('action' => 'index'))."?page=".$request['page']."&sort=artist&order=".($request['ord']['artist']+1)."&search=".$request[search];
-         } else {
-             echo $this->url('album', array('action' => 'index'))."?page=".$request['page']."&sort=artist&order=".($request['ord']['artist']+1);
+             echo "&search=".$request[search];
          }
          ?>">Artist</a></th>
          <th></th>
