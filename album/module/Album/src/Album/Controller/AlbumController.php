@@ -141,7 +141,9 @@ use Album\Form\AlbumForm;
 
              if ($del == 'Yes') {
                  $id = (int) $request->getPost('id');
+                 $name = $this->getAlbumTable()->getAlbum($id)->title;
                  $this->getAlbumTable()->deleteAlbum($id);
+                 return $this->redirect()->toUrl('/album?del='.$name);
              }
 
              // Redirect to list of albums

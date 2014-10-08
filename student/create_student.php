@@ -61,7 +61,7 @@
             <div class="form-group">
                 <label class="col-sm-3 control-label">Date of Birth:</label>
                 <div class="col-sm-9">
-                    <input class="form-control" type = "date" name = "dob" placeholder = "Date of Birth">
+                    <input class="form-control" type = "date" name = "dob">
                 </div>
             </div>
          <div class="col-sm-offset-3">

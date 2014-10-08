@@ -4,17 +4,35 @@
  $title = 'My Albums';
  $this->headTitle($title);
  ?>
+<style>
+    .active{
+        font-size: 17px;
+    }
+    #a{
+        color: white;
+    }
+    #x{
+        width: 400px;
+        float:left;
+    }
+</style>
  <h1><?php echo $this->escapeHtml($title); ?></h1>
- <p>
-     <a href="<?php echo $this->url('album', array('action'=>'add'));?>">Add new album</a>
- </p>
  <?php
+ if ($request['del']){
+     echo "<div class = 'alert alert-danger'>Album ".$request['del']." deleted</div>";        
+ }
+ ?>
+     <a href = "<?php echo $this->url('album', array('action'=>'add'));?>" id ='a'><div class = 'btn btn-primary'>Create New Album</div></a><br><br>
+<?php
 $form = $this->form;
 $form->setAttribute('action', $this->url('album', array('action' => 'index')));
 $form->prepare();
 echo $this->form()->openTag($form);
 echo $this->formInput($form->get('search'))." ";
-echo $this->formSubmit($form->get('submit'))." ";
+
+$form->get('submit')->setAttribute('class','btn btn-success');
+
+echo " ".$this->formSubmit($form->get('submit'));
 echo $this->form()->closeTag();
 ?>
  <br>
@@ -28,14 +46,14 @@ echo $this->form()->closeTag();
          ?>">Id</a></th>
          <th><a href="<?php
          echo $this->url('album', array('action' => 'index'))."?page=".$request['page']."&sort=title&order=".($request['ord']['title']+1);
-         if ($request[search]){
-             echo "&search=".$request[search];
+         if ($request['search']){
+             echo "&search=".$request['search'];
          }
          ?>">Title</a></th>
          <th><a href="<?php
          echo $this->url('album', array('action' => 'index'))."?page=".$request['page']."&sort=artist&order=".($request['ord']['artist']+1);
-         if ($request[search]){
-             echo "&search=".$request[search];
+         if ($request['search']){
+             echo "&search=".$request['search'];
          }
          ?>">Artist</a></th>
          <th></th>
