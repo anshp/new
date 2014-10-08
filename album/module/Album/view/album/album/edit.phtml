@@ -16,7 +16,9 @@
      )
  ));
  $form->prepare();
-
+ if ($notification){
+     echo "New album title - <b>".$notification['title']."</b>, new artist - <b>".$notification['artist']."</b><br><br>";
+ }
  echo $this->form()->openTag($form);
  echo $this->formHidden($form->get('id'));
  echo $this->formRow($form->get('title'))." ";

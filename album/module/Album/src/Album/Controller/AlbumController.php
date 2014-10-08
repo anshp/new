@@ -109,15 +109,22 @@ use Album\Form\AlbumForm;
 
              if ($form->isValid()) {
                  $this->getAlbumTable()->saveAlbum($album);
+                 $form->get('title')->setAttribute('value', $request->getPost('title'));
+                 $form->get('artist')->setAttribute('value', $request->getPost('artist'));
+                 $notification = array(
+                     'title' => $request->getPost('title'),
+                     'artist' => $request->getPost('artist')
+                     );
 
                  // Redirect to list of albums
-                 return $this->redirect()->toRoute('album');
+                 // return $this->redirect()->toRoute('album');
              }
          }
 
          return array(
              'id' => $id,
              'form' => $form,
+             'notification' => $notification
          );
      }
 
