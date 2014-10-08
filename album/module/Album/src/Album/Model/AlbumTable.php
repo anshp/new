@@ -1,7 +1,7 @@
 <?php
 namespace Album\Model;
 
-use Zend\Db\ResultSet\ResultSet;
+ use Zend\Db\ResultSet\ResultSet;
  use Zend\Db\TableGateway\TableGateway;
  use Zend\Db\Sql\Select;
  use Zend\Paginator\Adapter\DbSelect;
@@ -18,28 +18,25 @@ use Zend\Db\ResultSet\ResultSet;
      public function fetchAll($request, $paginated=false)
      {
          if ($paginated) {
+             
              // create a new Select object for the table album
              $select = new Select('album');
              $select->order($request['sort']." ".$request['order']);
-
+             
+             // Search
              if ($request['search']){
                  $x = $request['search'].'%';
                  $where = new \Zend\Db\Sql\Where();
                  $where->like('title', $x);
                  $select->where($where);
              }
-             // create a new result set based on the Album entity
+             
+             // New result set based on the Album entity
              $resultSetPrototype = new ResultSet();
              $resultSetPrototype->setArrayObjectPrototype(new Album());
-             // create a new pagination adapter object
-             $paginatorAdapter = new DbSelect(
-                 // our configured select object
-                 $select,
-                 // the adapter to run it against
-                 $this->tableGateway->getAdapter(),
-                 // the result set to hydrate
-                 $resultSetPrototype
-             );
+             
+             // New pagination adapter object
+             $paginatorAdapter = new DbSelect($select, $this->tableGateway->getAdapter(), $resultSetPrototype);
              $paginator = new Paginator($paginatorAdapter);
              return $paginator;
          }
@@ -64,7 +61,6 @@ use Zend\Db\ResultSet\ResultSet;
              'artist' => $album->artist,
              'title'  => $album->title,
          );
-
          $id = (int) $album->id;
          if ($id == 0) {
              $this->tableGateway->insert($data);

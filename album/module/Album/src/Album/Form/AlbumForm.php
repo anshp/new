@@ -7,9 +7,9 @@ namespace Album\Form;
  {
      public function __construct($name = null)
      {
-         // we want to ignore the name passed
          parent::__construct('album');
-
+         
+         // Id
          $this->add(array(
              'name' => 'id',
              'type' => 'text',
@@ -18,6 +18,7 @@ namespace Album\Form;
              ),
          ));
          
+         // Title
          $this->add(array(
              'name' => 'title',
              'type' => 'Text',
@@ -28,6 +29,8 @@ namespace Album\Form;
                  'class' => "form-control",
              ),
          ));
+         
+         // Artist
          $this->add(array(
              'name' => 'artist',
              'type' => 'Text',
@@ -39,6 +42,7 @@ namespace Album\Form;
              ),
          ));
          
+         // Search text
          $this->add(array(
              'name' => 'search',
              'type' => 'Text',
@@ -49,6 +53,8 @@ namespace Album\Form;
                  
              ),
          ));
+         
+         // Submit button
          $this->add(array(
              'name' => 'submit',
              'type' => 'Submit',
@@ -57,6 +63,8 @@ namespace Album\Form;
                  'id' => 'submitbutton',
              ),
          ));
+         
+         // Back button
          $this->add(array(
              'name' => 'submit2',
              'type' => 'Submit',
