@@ -1,5 +1,5 @@
 <?php
-namespace Album\Form;
+ namespace Album\Form;
 
  use Zend\Form\Form;
 
@@ -59,7 +59,7 @@ namespace Album\Form;
              'name' => 'submit',
              'type' => 'Submit',
              'attributes' => array(
-                 'value' => 'Go',
+                 'value' => 'Login',
                  'id' => 'submitbutton',
              ),
          ));
@@ -74,5 +74,32 @@ namespace Album\Form;
                  'class' =>'btn btn-success'
              ),
          ));
+         
+          // Username
+         $this->add(array(
+             'name' => 'username',
+             'type' => 'text',
+             'options' => array(
+                 'label' => 'Username: ',
+             ),
+             'attributes' => array(
+                 'class' => "form-control",
+                 'value' => 'a',
+             ),
+         ));
+         
+         // Password
+         $this->add(array(
+             'name' => 'password',
+             'type' => 'Text',
+             'options' => array(
+                 'label' => 'Password: ',
+             ),
+             'attributes' => array(
+                 'value' => 'a',
+                 'class' => "form-control",
+             ),
+         ));
+         
      }
  }

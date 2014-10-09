@@ -5,11 +5,56 @@ use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Album\Model\Album;     
 use Album\Form\AlbumForm;
+use Zend\Authentication\Adapter\DbTable\CredentialTreatmentAdapter as AuthAdapter;
+use Zend\Authentication\AuthenticationService;
 
 class AlbumController extends AbstractActionController
  {
      protected $albumTable;
+     protected $authadapter;
      
+     public function getAuthAdapter() {
+         if (!$this->authadapter) {
+             $sm = $this->getServiceLocator();
+             $dbadapter = $sm->get('Zend\Db\Adapter\Adapter');
+             $this->authadapter = new AuthAdapter($dbadapter, 'login', 'username', 'password');
+         }
+         return $this->authadapter;
+     }
+     
+     public function loginAction() {
+        $adapter = $this->getAuthAdapter();
+        $credentials = $this->getRequest();
+        $auth = new AuthenticationService();
+        $message = "";
+        if ($credentials->isPost()){
+             $adapter->setIdentity($credentials->getPost('username'));
+             $adapter->setCredential($credentials->getPost('password'));
+             $result = $auth->authenticate($adapter);
+             if (!$result->isValid()){
+                 $message = "Authentication failed";
+             }
+             else{
+                 return $this->redirect()->toRoute('album');
+             }
+         }
+         
+                 
+        $form = new AlbumForm();
+        
+        return array(
+            'form'  => $form,
+            'message' => $message
+        );
+    }
+        
+    public function logoutAction()
+    {
+        $auth = new AuthenticationService();
+        $auth -> clearIdentity();
+        return $this->redirect()->toRoute('album',array('action'=>'login'));
+    }
+    
      public function getAlbumTable()
      {
          if (!$this->albumTable) {
@@ -21,6 +66,10 @@ class AlbumController extends AbstractActionController
      
      public function indexAction()
      {
+         $auth = new AuthenticationService();
+         if (!$auth->hasIdentity()) {
+             return $this->redirect()->toRoute('album',array('action'=>'login'));
+         }
          // Manage page number, sort column and order
          $request = $this->params()->fromQuery();
          if (!$request['sort']){
@@ -59,6 +108,10 @@ class AlbumController extends AbstractActionController
 
      public function addAction()
      {
+         $auth = new AuthenticationService();
+         if (!$auth->hasIdentity()) {
+             return $this->redirect()->toRoute('album',array('action'=>'login'));
+         }
          $form = new AlbumForm();
          $form->get('submit')->setValue('Add');
          $request = $this->getRequest();
@@ -91,6 +144,10 @@ class AlbumController extends AbstractActionController
 
      public function editAction()
      {
+         $auth = new AuthenticationService();
+         if (!$auth->hasIdentity()) {
+             return $this->redirect()->toRoute('album',array('action'=>'login'));
+         }
          $id = (int) $this->params()->fromRoute('id', 0);
          if (!$id) {
              return $this->redirect()->toRoute('album', array(
@@ -144,6 +201,10 @@ class AlbumController extends AbstractActionController
 
      public function deleteAction()
      {
+         $auth = new AuthenticationService();
+         if (!$auth->hasIdentity()) {
+             return $this->redirect()->toRoute('album',array('action'=>'login'));
+         }
          $id = (int) $this->params()->fromRoute('id', 0);
          if (!$id) {
              return $this->redirect()->toRoute('album');
@@ -169,4 +230,5 @@ class AlbumController extends AbstractActionController
              'album' => $this->getAlbumTable()->getAlbum($id)
          );
      }
+     
  }
