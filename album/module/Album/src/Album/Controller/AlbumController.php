@@ -70,6 +70,7 @@ class AlbumController extends AbstractActionController
          if (!$auth->hasIdentity()) {
              return $this->redirect()->toRoute('album',array('action'=>'login'));
          }
+
          // Manage page number, sort column and order
          $request = $this->params()->fromQuery();
          if (!$request['sort']){
@@ -119,7 +120,7 @@ class AlbumController extends AbstractActionController
          // If form submitted
          if ($request->isPost()) {
              
-             // Back to view
+             // If back button clicked
              if ($request->getPost('submit2')){
                 return $this->redirect()->toRoute('album');
              }
