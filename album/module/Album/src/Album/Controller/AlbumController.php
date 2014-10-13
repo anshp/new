@@ -7,21 +7,50 @@ use Album\Model\Album;
 use Album\Form\AlbumForm;
 use Zend\Authentication\Adapter\DbTable\CredentialTreatmentAdapter as AuthAdapter;
 use Zend\Authentication\AuthenticationService;
+use Zend\Db\Sql\Sql;
+use Zend\Permissions\Acl\Acl;
+use Zend\Permissions\Acl\Role\GenericRole as Role;
 
 class AlbumController extends AbstractActionController
- {
+ { 
      protected $albumTable;
-     protected $authadapter;
+     protected $authAdapter;
+     protected $dbAdapter;
+     protected $acl;
      
-     public function getAuthAdapter() {
-         if (!$this->authadapter) {
+     
+     public function getDbAdapter() {
+         if (!$this->dbAdapter) {
              $sm = $this->getServiceLocator();
-             $dbadapter = $sm->get('Zend\Db\Adapter\Adapter');
-             $this->authadapter = new AuthAdapter($dbadapter, 'login', 'username', 'password');
+             $this->dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
          }
-         return $this->authadapter;
+         return $this->dbAdapter;
      }
      
+
+     
+     public function getAuthAdapter() {
+         if (!$this->authAdapter) {
+             $dbAdapter = $this->getDbAdapter();
+             $this->authAdapter = new AuthAdapter($dbAdapter, 'login', 'username', 'password');
+         }
+         return $this->authAdapter;
+     }
+     public function getRole() {
+         $auth = new AuthenticationService();
+         $adapter = $this->getDbAdapter();
+         $sql = new Sql($adapter);
+         $select = $sql->select('login');
+         
+         $select->where(array('username' => $auth->getIdentity()));
+         $selectString = $sql->getSqlStringForSqlObject($select);
+         $results = $adapter->query($selectString, $adapter::QUERY_MODE_EXECUTE);
+
+         foreach ($results as $row) {
+             $role =  $row->role;
+         }
+         return $role;
+     }
      public function loginAction() {
         $adapter = $this->getAuthAdapter();
         $credentials = $this->getRequest();
@@ -63,14 +92,27 @@ class AlbumController extends AbstractActionController
          }
          return $this->albumTable;
      }
-     
+     public function getAcl(){
+         if(!$this->acl){
+             $acl = new Acl();
+             $roleGuest = new Role('guest');
+             $acl->addRole($roleGuest);
+             $acl->addRole(new Role('admin'), $roleGuest);
+             $acl->allow($roleGuest, null, 'view');
+             $acl->allow('admin', null, array('add', 'edit', 'delete'));
+             $this->acl = $acl;
+         }
+         return $this->acl;
+         
+     }
      public function indexAction()
      {
          $auth = new AuthenticationService();
-         if (!$auth->hasIdentity()) {
+         $acl = $this->getAcl();
+         if (!$auth->hasIdentity() or !$acl->isAllowed($this ->getRole(), null, 'view')) {
              return $this->redirect()->toRoute('album',array('action'=>'login'));
          }
-
+         
          // Manage page number, sort column and order
          $request = $this->params()->fromQuery();
          if (!$request['sort']){
@@ -104,14 +146,20 @@ class AlbumController extends AbstractActionController
          // Return necessary variables
          return new ViewModel(array('paginator' => $paginator,
              'request' => $request,
-             'form' => $form));
+             'form' => $form,
+             'acl' => $acl,
+             ));
          }
 
      public function addAction()
      {
          $auth = new AuthenticationService();
+         $acl = $this->getAcl();
          if (!$auth->hasIdentity()) {
              return $this->redirect()->toRoute('album',array('action'=>'login'));
+         }
+         if (!$acl->isAllowed($this ->getRole(), null, 'add')){
+             return $this->redirect()->toRoute('album',array('action'=>'index'));
          }
          $form = new AlbumForm();
          $form->get('submit')->setValue('Add');
@@ -146,8 +194,12 @@ class AlbumController extends AbstractActionController
      public function editAction()
      {
          $auth = new AuthenticationService();
+         $acl = $this->getAcl();
          if (!$auth->hasIdentity()) {
              return $this->redirect()->toRoute('album',array('action'=>'login'));
+         }
+         if (!$acl->isAllowed($this ->getRole(), null, 'edit')){
+             return $this->redirect()->toRoute('album',array('action'=>'index'));
          }
          $id = (int) $this->params()->fromRoute('id', 0);
          if (!$id) {
@@ -203,8 +255,12 @@ class AlbumController extends AbstractActionController
      public function deleteAction()
      {
          $auth = new AuthenticationService();
+         $acl = $this->getAcl();
          if (!$auth->hasIdentity()) {
              return $this->redirect()->toRoute('album',array('action'=>'login'));
+         }
+         if (!$acl->isAllowed($this ->getRole(), null, 'delete')){
+             return $this->redirect()->toRoute('album',array('action'=>'index'));
          }
          $id = (int) $this->params()->fromRoute('id', 0);
          if (!$id) {

@@ -25,9 +25,9 @@
  if ($request['del']){
      echo "<div class = 'alert alert-danger'>Album <b>".$request['del']."</b> deleted</div>";        
  }
- ?>
-     <a href = "<?php echo $this->url('album', array('action'=>'add'));?>" id ='a'><div class = 'btn btn-primary'>Create New Album</div></a><br><br>
-<?php
+ 
+     echo "<a href = ".$this->url('album', array('action'=>'add'))." id ='a'><div class = 'btn btn-primary'>Create New Album</div></a><br><br>";
+
 $form = $this->form;
 $form->setAttribute('action', $this->url('album', array('action' => 'index')));
 $form->prepare();
@@ -73,6 +73,8 @@ echo $this->form()->closeTag();
              <td><?php echo $this->escapeHtml($album->title);?></td>
              <td><?php echo $this->escapeHtml($album->artist);?></td>
              <td>
+                 <?php
+                 ?>
                  <a href="<?php echo $this->url('album',
                      array('action' => 'edit', 'id' => $album->id));
                  ?>">Edit</a>
