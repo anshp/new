@@ -5,6 +5,11 @@
  $this->headTitle($title);
  ?>
 <style>
+    a.disabled {
+        cursor: not-allowed;
+        pointer-events: none;
+        
+    }
     .active{
         font-size: 17px;
     }
@@ -19,15 +24,21 @@
  <h1><?php echo $this->escapeHtml($title); ?><a class = 'col-sm-offset-7 btn btn-danger' href = "<?php echo $this->url('album',array('action'=>'logout')); ?>">Logout</a></h1>
  
  <?php
+ $acl = $this->acl;
+ $role = $this->role;
+ 
+ 
  if (!$request['page']){
      $request['page']=1;
  }
  if ($request['del']){
      echo "<div class = 'alert alert-danger'>Album <b>".$request['del']."</b> deleted</div>";        
  }
- 
+ if($acl->isAllowed($role, null, 'add')){
      echo "<a href = ".$this->url('album', array('action'=>'add'))." id ='a'><div class = 'btn btn-primary'>Create New Album</div></a><br><br>";
-
+ } else{
+     echo "<a class ='disabled' title = 'Login as admin to add' href = ".$this->url('album', array('action'=>'index'))." id ='a'><div class = 'btn btn-primary'>Create New Album</div></a><br><br>";
+ }
 $form = $this->form;
 $form->setAttribute('action', $this->url('album', array('action' => 'index')));
 $form->prepare();
@@ -74,15 +85,20 @@ echo $this->form()->closeTag();
              <td><?php echo $this->escapeHtml($album->artist);?></td>
              <td>
                  <?php
+                 if($acl->isAllowed($role, null, 'edit')){
+                     echo "<a href=".$this->url('album', array('action' => 'edit', 'id' => $album->id)).">Edit</a>";
+                  }else {
+                      echo 'Edit';
+                  }
                  ?>
-                 <a href="<?php echo $this->url('album',
-                     array('action' => 'edit', 'id' => $album->id));
-                 ?>">Edit</a>
              </td>
-             <td>
-                 <a href="<?php echo $this->url('album',
-                     array('action' => 'delete', 'id' => $album->id));
-                 ?>">Delete</a>
+             <td><?php
+                 if($acl->isAllowed($role, null, 'delete')){
+                     echo "<a href=".$this->url('album', array('action' => 'delete', 'id' => $album->id)).">Delete</a>";
+                  }else {
+                      echo 'Delete';
+                  }
+                 ?>
              </td>
          </tr>
      <?php endforeach; 

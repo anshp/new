@@ -108,8 +108,9 @@ class AlbumController extends AbstractActionController
      public function indexAction()
      {
          $auth = new AuthenticationService();
+         $role = $this->getRole();
          $acl = $this->getAcl();
-         if (!$auth->hasIdentity() or !$acl->isAllowed($this ->getRole(), null, 'view')) {
+         if (!$auth->hasIdentity() or !$acl->isAllowed($role, null, 'view')) {
              return $this->redirect()->toRoute('album',array('action'=>'login'));
          }
          
@@ -144,10 +145,12 @@ class AlbumController extends AbstractActionController
          $paginator->setItemCountPerPage(10);
          
          // Return necessary variables
+         
          return new ViewModel(array('paginator' => $paginator,
              'request' => $request,
              'form' => $form,
              'acl' => $acl,
+             'role' => $role,
              ));
          }
 
