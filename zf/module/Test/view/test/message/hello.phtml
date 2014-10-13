@@ -32,7 +32,7 @@ class Foo implements EventManagerAwareInterface
     }
 }
 $foo = new Foo();
-/*
+
 $foo->getEventManager()->attach('bar', function ($e){
     $event  = $e->getName();
     $target = get_class($e->getTarget());
@@ -42,7 +42,7 @@ $foo->getEventManager()->attach('bar', function ($e){
     echo($target)."<br>";
     echo($params)."<br>";
 });
-*/
+
 
 // Results in log message:
 $foo->bar('baz', 'bat');
