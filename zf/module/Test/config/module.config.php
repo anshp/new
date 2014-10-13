@@ -10,7 +10,7 @@ return array(
             'Test-hello-world' => array(
                 'type'    => 'Literal',
                     'options' => array(
-                    'route' => '/',
+                    'route' => '/hello/world',
                     'defaults' => array(
                         'controller' => 'Test\Controller\Hello',
                         'action'     => 'world',

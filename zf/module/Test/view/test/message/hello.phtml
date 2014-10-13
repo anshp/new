@@ -1,3 +1,49 @@
-<h1>Greetings!</h1>
+<?php
+use Zend\EventManager\EventManagerInterface;
+use Zend\EventManager\EventManager;
+use Zend\EventManager\EventManagerAwareInterface;
 
-<p>You said "<?php echo $this->escapeHtml($message) ?>".</p>
+class Foo implements EventManagerAwareInterface
+{
+    protected $events;
+
+    public function setEventManager(EventManagerInterface $events)
+    {
+        $events->setIdentifiers(array(
+            __CLASS__,
+            get_called_class(),
+        ));
+        $this->events = $events;
+        return $this;
+    }
+
+    public function getEventManager()
+    {
+        if (null === $this->events) {
+            $this->setEventManager(new EventManager());
+        }
+        return $this->events;
+        
+    }
+    public function bar($baz, $bat = null)
+    {
+        $params = compact('baz', 'bat');
+        $this->getEventManager()->trigger(__FUNCTION__, $this, $params);
+    }
+}
+$foo = new Foo();
+/*
+$foo->getEventManager()->attach('bar', function ($e){
+    $event  = $e->getName();
+    $target = get_class($e->getTarget());
+    $params = json_encode($e->getParams());
+
+    echo($event)."<br>";
+    echo($target)."<br>";
+    echo($params)."<br>";
+});
+*/
+
+// Results in log message:
+$foo->bar('baz', 'bat');
+echo $this->escapeHtml($message);
