@@ -4,6 +4,7 @@
  $title = 'My Albums';
  $this->headTitle($title);
  ?>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <style>
     a.disabled {
         cursor: not-allowed;
@@ -37,7 +38,7 @@
  if($acl->isAllowed($role, null, 'add')){
      echo "<a href = ".$this->url('album', array('action'=>'add'))." id ='a'><div class = 'btn btn-primary'>Create New Album</div></a><br><br>";
  } else{
-     echo "<a class ='disabled' title = 'Login as admin to add' href = ".$this->url('album', array('action'=>'index'))." id ='a'><div class = 'btn btn-primary'>Create New Album</div></a><br><br>";
+     echo "<a class ='disabled' href = ".$this->url('album', array('action'=>'index'))." id ='a'><div class = 'btn btn-primary'>Create New Album</div></a><br><br>";
  }
 $form = $this->form;
 $form->setAttribute('action', $this->url('album', array('action' => 'index')));
