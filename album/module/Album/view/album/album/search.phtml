@@ -1,4 +1,10 @@
-<table class="table table-striped" id ="searchtable">
+ <style>
+     body{
+        background: #efefef;
+     }
+ </style>
+ <div  id = 'searchtable'>
+ <table class="table table-striped">
      <tr>
          <th><a href="<?php
          echo $this->url('album', array('action' => 'index'))."?page=".$request['page']."&sort=id&order=".($request['ord']['id']+1);
@@ -31,7 +37,7 @@
                  if($acl->isAllowed($role, null, 'edit')){
                      echo "<a href=".$this->url('album', array('action' => 'edit', 'id' => $album->id)).">Edit</a>";
                   }else {
-                      echo 'Edit';
+                      echo '<span class = "dis">Edit</span>';
                   }
                  ?>
              </td>
@@ -39,7 +45,7 @@
                  if($acl->isAllowed($role, null, 'delete')){
                      echo "<a href=".$this->url('album', array('action' => 'delete', 'id' => $album->id)).">Delete</a>";
                   }else {
-                      echo 'Delete';
+                      echo '<span class = "dis">Delete</span>';
                   }
                  ?>
              </td>
@@ -57,8 +63,9 @@
               'route' => 'album',
               'sort' => $request['sort'],
               'order' => $request['order'],
-              'search' => $request['search']
+              'search' =>$request['search']
               
           )
           );
   ?>
+</div>

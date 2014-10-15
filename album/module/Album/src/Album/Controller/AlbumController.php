@@ -326,7 +326,7 @@ class AlbumController extends AbstractActionController
                  $id = (int) $request->getPost('id');
                  $name = $this->getAlbumTable()->getAlbum($id)->title;
                  $this->getAlbumTable()->deleteAlbum($id);
-                 return $this->redirect()->toUrl('/album?del='.$name);
+                 return $this->redirect()->toUrl('/album/public/album?del='.$name);
              }
 
              // Redirect to list of albums

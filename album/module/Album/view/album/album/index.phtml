@@ -7,15 +7,16 @@
  $role = $this->role;
  ?>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-
 <style>
+    .dis{
+        color: #888;
+        cursor: not-allowed;
+    }
+    body {
+        background-color: #efefef;
+    }
     .logoutbutton{
         float: right;
-    }
-    a.disabled {
-        cursor: not-allowed;
-        pointer-events: none;
-        
     }
     .active{
         font-size: 17px;
@@ -30,7 +31,10 @@
     }
     #searchtable{
         margin-left: -15px;
+        margin-right: 15px;
+        
     }
+    
 </style>
  <h1>
      <?php
@@ -54,7 +58,7 @@
  if($acl->isAllowed($role, null, 'add')){
      echo "<a href = ".$this->url('album', array('action'=>'add'))." id ='a'><div class = 'btn btn-primary'>Create New Album</div></a><br><br>";
  } else{
-     echo "<a class ='disabled' href = ".$this->url('album', array('action'=>'index'))." id ='a'><div class = 'btn btn-primary'>Create New Album</div></a><br><br>";
+     echo "<a class ='disabled btn btn-primary' href = '#' id ='a'>Create New Album</a><br><br>";
  }
  ?>
  
@@ -102,7 +106,7 @@ echo $this->form()->closeTag();
                  if($acl->isAllowed($role, null, 'edit')){
                      echo "<a href=".$this->url('album', array('action' => 'edit', 'id' => $album->id)).">Edit</a>";
                   }else {
-                      echo 'Edit';
+                      echo '<span class = "dis">Edit</span>';
                   }
                  ?>
              </td>
@@ -110,7 +114,7 @@ echo $this->form()->closeTag();
                  if($acl->isAllowed($role, null, 'delete')){
                      echo "<a href=".$this->url('album', array('action' => 'delete', 'id' => $album->id)).">Delete</a>";
                   }else {
-                      echo 'Delete';
+                      echo '<span class = "dis">Delete</span>';
                   }
                  ?>
              </td>

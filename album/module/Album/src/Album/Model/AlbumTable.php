@@ -28,6 +28,7 @@
                  $x = $request['search'].'%';
                  $where = new \Zend\Db\Sql\Where();
                  $where->like('title', $x);
+                 $where->or->like('artist', $x);
                  $select->where($where);
              }
              
