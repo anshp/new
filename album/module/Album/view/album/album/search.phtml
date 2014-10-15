@@ -1,0 +1,64 @@
+<table class="table table-striped" id ="searchtable">
+     <tr>
+         <th><a href="<?php
+         echo $this->url('album', array('action' => 'index'))."?page=".$request['page']."&sort=id&order=".($request['ord']['id']+1);
+         if ($request[search]){
+             echo "&search=".$request[search];
+         }
+         ?>">Id</a></th>
+         <th><a href="<?php
+         echo $this->url('album', array('action' => 'index'))."?page=".$request['page']."&sort=title&order=".($request['ord']['title']+1);
+         if ($request['search']){
+             echo "&search=".$request['search'];
+         }
+         ?>">Title</a></th>
+         <th><a href="<?php
+         echo $this->url('album', array('action' => 'index'))."?page=".$request['page']."&sort=artist&order=".($request['ord']['artist']+1);
+         if ($request['search']){
+             echo "&search=".$request['search'];
+         }
+         ?>">Artist</a></th>
+         <th></th>
+         <th></th>
+     </tr>
+     <?php foreach ($this->paginator as $album) : ?>
+         <tr>
+             <td><?php echo $this->escapeHtml($album->id);?></td>
+             <td><?php echo $this->escapeHtml($album->title);?></td>
+             <td><?php echo $this->escapeHtml($album->artist);?></td>
+             <td>
+                 <?php
+                 if($acl->isAllowed($role, null, 'edit')){
+                     echo "<a href=".$this->url('album', array('action' => 'edit', 'id' => $album->id)).">Edit</a>";
+                  }else {
+                      echo 'Edit';
+                  }
+                 ?>
+             </td>
+             <td><?php
+                 if($acl->isAllowed($role, null, 'delete')){
+                     echo "<a href=".$this->url('album', array('action' => 'delete', 'id' => $album->id)).">Delete</a>";
+                  }else {
+                      echo 'Delete';
+                  }
+                 ?>
+             </td>
+         </tr>
+     <?php endforeach; 
+     
+     ?>
+ </table>
+  <?php
+  echo $this->paginationControl(
+          $this->paginator,
+          'sliding',
+          array('partial/paginator.phtml', 'Album'),
+          array(
+              'route' => 'album',
+              'sort' => $request['sort'],
+              'order' => $request['order'],
+              'search' => $request['search']
+              
+          )
+          );
+  ?>

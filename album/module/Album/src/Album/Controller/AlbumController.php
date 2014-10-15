@@ -153,6 +153,54 @@ class AlbumController extends AbstractActionController
              'role' => $role,
              ));
          }
+     public function searchAction()
+     {
+         $auth = new AuthenticationService();
+         $role = $this->getRole();
+         $acl = $this->getAcl();
+         if (!$auth->hasIdentity() or !$acl->isAllowed($role, null, 'view')) {
+             return $this->redirect()->toRoute('album',array('action'=>'login'));
+         }
+         
+         // Manage page number, sort column and order
+         $request = $this->params()->fromQuery();
+         if (!$request['sort']){
+             $request['sort'] = 'id';
+             $request['ord'] = array($request['sort'] => 1);
+         } else {
+             $request['ord'][$request['sort']] = $request['order']%2;
+         }
+         if ($request['ord'][$request['sort']] == 1 or $request['order'] == 'ASC'){
+             $request['order'] = 'ASC';
+         } else {
+             $request['order'] = 'DESC';
+         }
+         
+         // Get search term
+         $srequest = $this->getRequest();
+         if ($srequest->isPost()) {
+             $request['search'] = $srequest->getPost('search');
+         }
+         
+         // Search form
+         $form = new AlbumForm();
+         $form->get('submit')->setValue('Search Title');
+         $form->get('search')->setValue($request['search']);
+        
+         // Get data from table into paginator and conigure the paginator
+         $paginator = $this->getAlbumTable()->fetchAll($request, true);
+         $paginator->setCurrentPageNumber((int) $this->params()->fromQuery('page', 1));
+         $paginator->setItemCountPerPage(10);
+         
+         // Return necessary variables
+         
+         return new ViewModel(array('paginator' => $paginator,
+             'request' => $request,
+             'form' => $form,
+             'acl' => $acl,
+             'role' => $role,
+             ));
+         }
 
      public function addAction()
      {

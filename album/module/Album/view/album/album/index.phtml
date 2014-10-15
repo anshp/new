@@ -3,9 +3,15 @@
 
  $title = 'My Albums';
  $this->headTitle($title);
+ $acl = $this->acl;
+ $role = $this->role;
  ?>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
 <style>
+    .logoutbutton{
+        float: right;
+    }
     a.disabled {
         cursor: not-allowed;
         pointer-events: none;
@@ -17,45 +23,52 @@
     #a{
         color: white;
     }
-    #x{
+    #searchinput{
         width: 400px;
         float:left;
+        margin-right: 5px;
+    }
+    #searchtable{
+        margin-left: -15px;
     }
 </style>
- <h1><?php echo $this->escapeHtml($title); ?><a class = 'col-sm-offset-7 btn btn-danger' href = "<?php echo $this->url('album',array('action'=>'logout')); ?>">Logout</a></h1>
+ <h1>
+     <?php
+     echo $this->escapeHtml($title);
+     ?>
+     <a class = 'logoutbutton btn btn-danger' href = "<?php echo $this->url('album',array('action'=>'logout')); ?>">Logout</a></h1>
  
  <?php
- $acl = $this->acl;
- $role = $this->role;
  
  
+ //Set default page number = 1
  if (!$request['page']){
      $request['page']=1;
  }
+ //Album deleted notification
  if ($request['del']){
      echo "<div class = 'alert alert-danger'>Album <b>".$request['del']."</b> deleted</div>";        
  }
+ 
+ //Add Create Album button
  if($acl->isAllowed($role, null, 'add')){
      echo "<a href = ".$this->url('album', array('action'=>'add'))." id ='a'><div class = 'btn btn-primary'>Create New Album</div></a><br><br>";
  } else{
      echo "<a class ='disabled' href = ".$this->url('album', array('action'=>'index'))." id ='a'><div class = 'btn btn-primary'>Create New Album</div></a><br><br>";
  }
-$form = $this->form;
-$form->setAttribute('action', $this->url('album', array('action' => 'index')));
-$form->prepare();
-echo $this->form()->openTag($form);
-echo $this->formInput($form->get('search'))." ";
+ ?>
+ 
+<input autocomplete="off" type="text" name="search" class="form-control col-xs-6 col-md-4" id="searchinput" placeholder="Enter Search Text" onfocus="this.value = this.value;"> 
+<div id = 'searchbutton' class = "btn btn-success">Search</div>
+<a id = 'cancel' class = "btn btn-danger" href = "<?php $this->url('album', array('action' => 'index')); ?>">Cancel</a>
 
-$form->get('submit')->setAttribute('class','btn btn-success');
-
-echo " ".$this->formSubmit($form->get('submit'))." ";
-if($request['search']){
-    echo "<a class = 'btn btn-danger' href = '".$this->url('album', array('action' => 'index'))."'>Cancel</a>";
-}
+ 
+<?php
 echo $this->form()->closeTag();
-
 ?>
- <br>
+
+<br><br>
+<div id = 'y'>
 <table class="table table-striped">
      <tr>
          <th><a href="<?php
@@ -119,6 +132,35 @@ echo $this->form()->closeTag();
               
           )
           );
-  
-  //$dbAdapter = new Zend\Db\Adapter\Adapter;
-  //print_r($dbAdapter)  ;
+  ?>
+</div>
+ <script>
+     $(document).ready(function(){
+         if ($("#searchinput").text() === ""){
+             $("#cancel").hide();
+         }
+     })
+     $("#searchinput").keyup(function(event){
+         if(event.keyCode === 13){
+             $("#searchbutton").click();
+         }
+         if(event.keyCode === 27){
+             $("#searchinput").val("");
+             $("#searchbutton").click();
+             $("#cancel").hide();
+         }
+         
+     });
+     $("#searchbutton").click(function(){
+         $("#cancel").show();
+         $.post("/album/public/album/search",
+         {
+             search : $("#searchinput").val()
+         },
+         function(data){
+             $("#y").html(data);
+             $("#searchinput").focus();
+             
+         });
+     });
+</script>

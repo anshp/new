@@ -5,6 +5,7 @@
     </title>
     <link rel = "stylesheet" href = "bootstrap.min.css">
     <link rel = "stylesheet" href = "bootstrap-theme.min.css">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 
     <style>
     h1{
@@ -28,6 +29,7 @@
     #x{
         width: 400px;
         float:left;
+        margin-right: 5px;
     }
     </style>
 
@@ -76,7 +78,7 @@
     </div>
         <a href = "create_student.php"><div class = 'btn btn-primary'>Create New Student</div></a><br><br>
         <form method = "post" action = "student.php">
-            <input id = 'x' class = "form-control" type = "text" name = 'search' value = "<?PHP echo $a; ?>">
+            <input autocomplete="off"  id = 'x' class = "form-control" type = "text" name = 'search' value = "<?PHP echo $a; ?>" onfocus="this.value = this.value;">
             <input class = 'btn btn-success' type = 'submit' value = 'search'>
             <?php
             if ($a) {
@@ -189,7 +191,20 @@
         ?>
     </div>
 </div>
-
+<div id ='y'></div>
+<script>
+     $("#x").keyup(function(){
+         $.post("/student/student.php",
+         {
+             search : $("#x").val()
+         },
+         function(data){
+             $("body").html(data);
+             $("#x").focus();
+         });
+     });
+</script>
 
 </body>
+
 </html>

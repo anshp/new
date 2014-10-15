@@ -50,6 +50,8 @@
                  'label' => 'Search',
                  'class' => "form-control",
                  'id' => 'x',
+                 'placeholder' => 'Enter Search Text',
+                 'onfocus' => "this.value = this.value;"
                  
              ),
          ));

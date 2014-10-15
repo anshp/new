@@ -4,9 +4,17 @@
  $title = 'Delete album';
  $this->headTitle($title);
  ?>
- <h1><?php echo $this->escapeHtml($title); ?><a class = 'col-sm-offset-7 btn btn-danger' href = "<?php echo $this->url('album',array('action'=>'logout')); ?>">Logout</a></h1>
+<style>
+    .logoutbutton{
+        float: right;
+    }
+    
+</style>
+ <h1><?php echo $this->escapeHtml($title); ?>
+ <a class = 'logoutbutton btn btn-danger' href = "<?php echo $this->url('album',array('action'=>'logout')); ?>">Logout</a>
+ </h1>
 
- <p class ='alert alert-link'>Are you sure that you want to delete
+ <p class ='alert alert-warning'>Are you sure that you want to delete
      '<b><?php echo $this->escapeHtml($album->title); ?></b>' by
      '<b><?php echo $this->escapeHtml($album->artist); ?></b>'?
      
