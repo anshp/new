@@ -62,9 +62,9 @@
  }
  ?>
  
-<input autocomplete="off" type="text" name="search" class="form-control col-xs-6 col-md-4" id="searchinput" placeholder="Enter Search Text" onfocus="this.value = this.value;"> 
+<input autocomplete="off" type="text" name="search" class="form-control col-xs-6 col-md-4" id="searchinput" placeholder="Enter Search Text" onfocus="this.value = this.value;" value = <?php echo $request['search']?>> 
 <div id = 'searchbutton' class = "btn btn-success">Search</div>
-<a id = 'cancel' class = "btn btn-danger" href = "<?php $this->url('album', array('action' => 'index')); ?>">Cancel</a>
+<a id = 'cancel' class = "btn btn-danger" href = "<?php echo $this->url('album', array('action' => 'index')); ?>">Cancel</a>
 
  
 <?php
@@ -140,7 +140,7 @@ echo $this->form()->closeTag();
 </div>
  <script>
      $(document).ready(function(){
-         if ($("#searchinput").text() === ""){
+         if ($("#searchinput").val() === ""){
              $("#cancel").hide();
          }
      })
