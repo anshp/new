@@ -10,7 +10,7 @@ return array(
             'emp-hello-world' => array(
                 'type'    => 'Literal',
                     'options' => array(
-                    'route' => '/hello/world',
+                    'route' => '/',
                     'defaults' => array(
                         'controller' => 'emp\Controller\Hello',
                         'action'     => 'world',

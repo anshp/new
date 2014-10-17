@@ -1,3 +1,15 @@
-<h1>Greetings!</h1>
-
-<p>You said "<?php echo $this->escapeHtml($message) ?>".</p>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<a id = 'x'>x</a>
+<script>
+$(document).ready(function () {
+    for (i = 0; i<10; i++){
+        var txt2 = $("<div></div>").text(i);
+        txt2.css({"background-color":"#D1D5D9", "border":"1px solid #352421", "width":"30%", "margin":"10px"})
+        $("#x").append(txt2);
+    }
+    $(document).on("click", "div", function(){
+        $(this).text(i++);
+    })
+    
+});
+</script>
