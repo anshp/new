@@ -290,12 +290,8 @@ class AlbumController extends AbstractActionController
                      'title' => $request->getPost('title'),
                      'artist' => $request->getPost('artist')
                      );
-
-                 // Redirect to list of albums
-                 // return $this->redirect()->toRoute('album');
              }
          }
-
          return array(
              'id' => $id,
              'form' => $form,
@@ -317,11 +313,9 @@ class AlbumController extends AbstractActionController
          if (!$id) {
              return $this->redirect()->toRoute('album');
          }
-
          $request = $this->getRequest();
          if ($request->isPost()) {
              $del = $request->getPost('del', 'No');
-
              if ($del == 'Yes') {
                  $id = (int) $request->getPost('id');
                  $name = $this->getAlbumTable()->getAlbum($id)->title;
@@ -332,11 +326,9 @@ class AlbumController extends AbstractActionController
              // Redirect to list of albums
              return $this->redirect()->toRoute('album');
          }
-
          return array(
              'id'    => $id,
              'album' => $this->getAlbumTable()->getAlbum($id)
          );
      }
-     
  }

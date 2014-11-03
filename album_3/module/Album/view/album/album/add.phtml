@@ -1,0 +1,44 @@
+ <?php
+
+ // module/Album/view/album/album/add.phtml:
+
+ $title = 'Add new album';
+ $this->headTitle($title);
+ ?>
+<style>
+    body {
+        background-color: #efefef;
+    }
+    .logoutbutton{
+        float: right;
+    }
+    .width{
+        width: 400px;        
+    }
+</style>
+ <h1><?php echo $this->escapeHtml($title); ?>
+ <a class = 'logoutbutton btn btn-danger' href = "<?php echo $this->url('album',array('action'=>'logout')); ?>">Logout</a>
+ </h1>
+ <?php
+ $form->setAttribute('action', $this->url('album', array('action' => 'add')));
+ $form->setAttribute('class','width');
+ $form->prepare();
+  if ($notification){
+     echo "<div class = 'alert alert-success'>New album <b>".$notification['title']."</b> by <b>".$notification['artist']."</b> added</div><br>";
+ }
+ echo $this->form()->openTag($form);
+ echo $this->formHidden($form->get('id'));
+ 
+
+ echo $this->formLabel($form->get('title'))."<br>";
+ echo $this->formText($form->get('title'))."<br><br>";
+ 
+ echo $this->formLabel($form->get('artist'))."<br>";
+ echo $this->formText($form->get('artist'))."<br><br>";
+ $form->get('submit')->setAttribute('class','btn btn-primary');
+
+ echo $this->formSubmit($form->get('submit'))." ";
+
+ echo $this->formSubmit($form->get('submit2'));
+ echo $this->form()->closeTag();
+ ?>
