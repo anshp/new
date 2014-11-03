@@ -3,7 +3,6 @@ namespace Album\Controller;
 
 use Zend\Mvc\Controller\AbstractRestfulController;
 use Zend\View\Model\JsonModel;
-use Zend\View\Model\ViewModel;
 use Album\Model\Album;
 use Swagger\Annotations as SWG;
 /**
@@ -14,8 +13,16 @@ use Swagger\Annotations as SWG;
  *          @SWG\Operation(
  *              nickname="getall",
  *              method="GET",
- *              summary="Get all albums"
- *          )
+ *              summary="Get all albums",
+ *              @SWG\Parameter(
+ *                   name="page",
+ *                   description="Page Number",
+ *                   required=false,
+ *                   type="album",
+ *                   paramType="query",
+ *             ),
+ *          ),
+ *           
  *      )
  * )
  * @SWG\Resource(
@@ -95,7 +102,7 @@ use Swagger\Annotations as SWG;
  *                   name="albumId",
  *                   description="Id of the album to be edited (If album is not found, new album will be added)",
  *                   required=true,
- *                   type="int",
+ *                   type="integer",
  *                   paramType="path",
  *                   allowMultiple=true
  *             ),
@@ -154,9 +161,7 @@ class AlbumController extends AbstractRestfulController
             
             // Return necessary variables
             
-            return new ViewModel(array(
-                 'paginator' => $paginator,
-                 ));
+            return new JsonModel($paginator);
          }
          else {
              try {
