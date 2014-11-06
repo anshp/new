@@ -1,0 +1,91 @@
+<?php
+ $title = 'Employee Records';
+ $this->headTitle($title);
+ ?>
+<style>
+    body {
+        background-color: #efefef;
+    }
+    .page{
+        font-size: 16px;
+    }
+    .width{
+        width: 400px;
+    }
+</style>
+ <h1><?php echo $this->escapeHtml($title); ?></h1>
+ <?php
+ $form = $this->form;
+ $form->setAttribute('class','width');
+ $form->prepare();
+ echo $this->form()->openTag($form);
+ if ($this->search){
+     $searchquery = "&search=".$this->search; //for pagination
+     $form->get('search')->setAttribute('value',$this->search);
+} else {
+    $searchquery = "";
+}
+ echo $this->formText($form->get('search'));
+ echo $this->formSubmit($form->get('searchbutton'))." ";
+ echo $this->form()->closeTag();
+ ?>
+ <br>
+<table class="table table-striped">
+     <tr>
+         <th>User Name</th>
+         <th>In Time</th>
+         <th>In Location</th>
+         <th>Out Time</th>
+         <th>Out Location</th>
+     </tr>
+     <?php foreach ($this->result as $record) : ?>
+         <tr>
+             <?php 
+             if (!$this->username){
+                 $usernameroute = ""; //for pagination
+                 echo "<td><a href = '".$this->url('employee', array('action' => 'admin', 'emp'=> $record->username ))."'>".$this->escapeHtml($record->username)."</a></td>";
+             } else{
+                 $usernameroute = $this->username;
+                 echo "<td>".$this->escapeHtml($record->username)."</td>";
+             }
+             ?>
+             
+             <td><?php echo $this->escapeHtml($record->intime);?></td>
+             <td><?php echo $this->escapeHtml($record->inlocation);?></td>
+             <td><?php echo $this->escapeHtml($record->outtime);?></td>
+             <td><?php echo $this->escapeHtml($record->outlocation);?></td>
+         </tr>
+     <?php endforeach; 
+     
+     ?>
+ </table> 
+ 
+<ul class = 'pagination'>
+     <?php
+     
+     if ($this->paginator['page'] == 1){
+         echo "<li><a href = '#'>Prev</a></li>";
+     } else {
+         
+         echo "<li><a href = '".$this->url('employee', array('action' => 'admin')).$usernameroute."?page=".($this->paginator['page']-1).$searchquery."'>Prev</a></li>";
+     }
+     
+     for ($i = 0; $i < $this->paginator['pages']; $i++){
+         if (($i+1) == $this->paginator['page']){
+             echo "<li class = 'active'><a href = '".$this->url('employee', array('action' => 'admin')).$usernameroute."?page=".($i+1).$searchquery."'><div class='page'>".($i+1)."</div></a></li>";
+             }
+         else {
+             echo "<li><a href = '".$this->url('employee', array('action' => 'admin')).$usernameroute."?page=".($i+1).$searchquery."'>".($i+1)."</a></li>";
+         }
+
+     }
+     if ($this->paginator['page']== $this->paginator['pages']){
+         echo "<li><a href = '#'>Next</a></li>";
+     } else {
+         echo "<li><a href = '".$this->url('employee', array('action' => 'admin')).$usernameroute."?page=".($this->paginator['page']+1).$searchquery."'>Next</a></li>";
+
+         
+     }
+
+     ?>
+</ul>

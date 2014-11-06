@@ -1,0 +1,23 @@
+{% load staticfiles %}
+<link rel="stylesheet" type="text/css" href="{% static 'students/bootstrap.min.css' %}" />
+<style>
+table{
+	font-size: 14px;
+}
+</style>
+<title>Student Detail</title>
+<h1>Student Detail</h1>
+<table class = 'table table-striped'>
+	<tr>
+		<th>Id</th>
+		<th>Name</th>
+		<th>Class</th>
+		<th>Date of Birth</th>
+	</tr>
+	<tr>
+		<td>{{ student.id }}</td>
+		<td>{{ student.name }}</td>
+		<td>{{ student.student_class }}</td>
+		<td>{{ student.date_of_birth }}</td>
+	</tr>
+</table>

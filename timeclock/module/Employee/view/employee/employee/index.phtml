@@ -1,0 +1,12 @@
+<?php
+ $title = 'Employee Records';
+ $this->headTitle($title);
+ ?>
+<style>
+    body {
+        background-color: #efefef;
+    }
+</style>
+ <h1><?php echo $this->escapeHtml($title); ?></h1>
+ <a class = 'btn btn-success' href = "<?php echo $this->url('employee', array('action' => 'login'))?>">Login</a>
+ <a class = 'btn btn-primary' href = "<?php echo $this->url('employee', array('action' => 'logout'))?>">Logout</a>

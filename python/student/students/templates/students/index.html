@@ -1,0 +1,36 @@
+{% load staticfiles %}
+<link rel="stylesheet" type="text/css" href="{% static 'students/bootstrap.min.css' %}" />
+<style>
+table{
+	font-size: 14px;
+}
+</style>
+<title>List of Students</title>
+{% if student_list %}
+	<h1>List of Students</h1>
+	{{request.method}}
+	<form action="{% url 'students:index' %}" method="post">
+		{% csrf_token %}
+		<input type="text" name="search" id="search" value = "{% if search %}{{search}}{% endif %}"placeholder="Enter search text">
+		<input class = 'btn btn-success' type="submit" value="Search" />
+	</form>
+	<table class = 'table table-striped'>
+		<tr>
+			
+			<th><a href="{% url 'students:index' %}?sort=id&order={{ order }}">Id</a></th>
+			<th><a href="{% url 'students:index' %}?sort=name&order={{ order }}">Name</a></th>
+			<th><a href="{% url 'students:index' %}?sort=class&order={{ order }}">Class</a></th>
+			<th><a href="{% url 'students:index' %}?sort=dob&order={{ order }}">Date of Birth</a></th>
+		</tr>
+		{% for student in student_list %}
+		<tr>
+			<td>{{ student.id }}</td>
+			<td><a href="{% url 'students:detail' student.id %}">{{ student.name }}</a></td>
+			<td>{{ student.student_class }}</td>
+			<td>{{ student.date_of_birth }}</td>
+		</tr>
+	{% endfor %}
+	</table>
+{% else %}
+	<p>No polls are available.</p>
+{% endif %}

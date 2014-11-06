@@ -1,0 +1,34 @@
+ <?php
+ $title = 'Login';
+ $this->headTitle($title);
+ ?>
+<style>
+    body {
+        background-color: #efefef;
+    }
+    .width{
+        width: 400px;
+    }
+</style>
+
+ <h1><?php echo $this->escapeHtml($title); ?></h1>
+ <?php
+ if ($this->message){
+     echo "<div class = 'alert alert-danger'><b>".$this->message."</b></div>"; 
+ }
+ 
+ $form = $this->form;
+ 
+ $form->setAttribute('class','width');
+ $form->prepare();
+ echo $this->form()->openTag($form);
+ 
+ echo $this->formLabel($form->get('username'))."<br>";
+ echo $this->formText($form->get('username'))."<br><br>";
+ 
+ echo $this->formLabel($form->get('password'))."<br>";
+ echo $this->formText($form->get('password'))."<br><br>";
+ 
+ $form->get('login')->setAttribute('class','btn btn-success');
+ echo $this->formSubmit($form->get('login'))." ";
+ echo $this->form()->closeTag();

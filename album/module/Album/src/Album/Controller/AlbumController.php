@@ -11,6 +11,7 @@ use Zend\Db\Sql\Sql;
 use Zend\Permissions\Acl\Acl;
 use Zend\Permissions\Acl\Role\GenericRole as Role;
 
+
 class AlbumController extends AbstractActionController
  { 
      protected $albumTable;

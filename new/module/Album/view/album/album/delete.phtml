@@ -1,0 +1,38 @@
+ <?php
+ // module/Album/view/album/album/delete.phtml:
+
+ $title = 'Delete album';
+ $this->headTitle($title);
+ ?>
+<style>
+    body {
+        background-color: #efefef;
+    }
+    .logoutbutton{
+        float: right;
+    }
+    
+</style>
+ <h1><?php echo $this->escapeHtml($title); ?>
+ <a class = 'logoutbutton btn btn-danger' href = "<?php echo $this->url('album',array('action'=>'logout')); ?>">Logout</a>
+ </h1>
+
+ <p class ='alert alert-warning'>Are you sure that you want to delete
+     '<b><?php echo $this->escapeHtml($album->title); ?></b>' by
+     '<b><?php echo $this->escapeHtml($album->artist); ?></b>'?
+     
+ </p>
+ 
+ <?php
+ $url = $this->url('album', array(
+     'action' => 'delete',
+     'id'     => $this->id,
+ ));
+ ?>
+ <form action="<?php echo $url; ?>" method="post">
+ <div>
+     <input type="hidden" name="id" value="<?php echo (int) $album->id; ?>" />
+     <input class='btn btn-danger' type="submit" name="del" value="Yes" />
+     <input class='btn btn-success' type="submit" name="del" value="Cancel" />
+ </div>
+ </form>
